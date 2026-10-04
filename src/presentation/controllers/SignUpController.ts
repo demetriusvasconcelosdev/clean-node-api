@@ -3,6 +3,7 @@ import { MissingParamError } from '../errors/missing-param-error'
 import { badRequest } from '../helpers/http-helper'
 import type { Controller } from '../protocols/controller'
 import { type EmailValidator } from '../protocols/email-validator'
+import { InvalidParamError } from '../errors'
 
 export class SignUpController implements Controller {
   private readonly emailValidator: EmailValidator
@@ -18,6 +19,14 @@ export class SignUpController implements Controller {
       if (httpRequest.body?.[field] === undefined) {
         return badRequest(new MissingParamError(field))
       }
+    }
+
+    const isValidEmail = this.emailValidator.isValid(
+      httpRequest.body.email as string
+    )
+
+    if (!isValidEmail) {
+      return badRequest(new InvalidParamError('email'))
     }
 
     return {
