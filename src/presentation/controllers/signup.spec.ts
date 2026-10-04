@@ -79,4 +79,18 @@ describe('SignUp Controller', () => {
       new MissingParamError('passwordConfirmation')
     )
   })
+
+  test('Should return 400 if an invalid email is provided', () => {
+    const sut = makeSut()
+
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        password: '123'
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest)
+  })
 })
