@@ -6,5 +6,12 @@ export class SignUpController {
             body: 'Missing param: name'
         }
       }
+
+        if(!httpRequest.body.email){
+            return {
+                statusCode: 400,
+                body: 'Missing param: email'
+            }
+        }
     }
 }
