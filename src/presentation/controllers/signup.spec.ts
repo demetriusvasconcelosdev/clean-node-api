@@ -1,7 +1,7 @@
 import { SignUpController } from './SignUpController'
 import { MissingParamError } from '../errors/missing-param-error'
 import { type EmailValidator } from '../protocols/email-validator'
-import { InvalidParamError } from '../errors'
+import { InvalidParamError, ServerError } from '../errors'
 
 interface SutTypes {
   sut: SignUpController
@@ -110,10 +110,12 @@ describe('SignUp Controller', () => {
     expect(httpResponse.body).toEqual(new InvalidParamError('email'))
   })
 
-    test('Should call EmailValidator with correct email', () => {
+  test('Should call EmailValidator with correct email', () => {
     const { sut, emailValidatorStub } = makeSut()
 
-    const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
+    const isValidSpy = jest
+      .spyOn(emailValidatorStub, 'isValid')
+      .mockReturnValueOnce(false)
 
     const httpRequest = {
       body: {
@@ -124,7 +126,28 @@ describe('SignUp Controller', () => {
       }
     }
 
-   sut.handle(httpRequest)
+    sut.handle(httpRequest)
     expect(isValidSpy).toHaveBeenCalledWith('any_email@mail.com')
+  })
+
+  test('Should 500 if EmailValidator throws', () => {
+    const { sut, emailValidatorStub } = makeSut()
+
+    jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
+      throw new Error()
+    })
+
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        password: '123',
+        passwordConfirmation: '123'
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 })
