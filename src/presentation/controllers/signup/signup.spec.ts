@@ -1,12 +1,11 @@
-import { SignUpController } from './SignUpController'
-import { MissingParamError } from '../errors/missing-param-error'
-import { type EmailValidator } from '../protocols'
-import { InvalidParamError, ServerError } from '../errors'
-import {
-  type AddAccountModel,
-  type AddAccount
-} from '../../domain/usecases/add-account'
-import { type AccountModel } from '../../domain/models/account'
+import { SignUpController } from './signup'
+import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
+import type {
+  AccountModel,
+  AddAccount,
+  AddAccountModel,
+  EmailValidator
+} from './signup-protocols'
 
 interface SutTypes {
   sut: SignUpController
