@@ -1,6 +1,6 @@
 import { SignUpController } from './signup'
 import { MissingParamError } from '../../errors/missing-param-error'
-import { type EmailValidator } from '../../protocols'
+import { type EmailValidator } from '@/validation/protocols'
 import { InvalidParamError, ServerError } from '../../errors'
 import {
   type AddAccountModel,
