@@ -8,7 +8,7 @@ describe('DbAddAccount Usecase', () => {
       }
     }
 
-    const encrypterStub = new encrypterStub()
+    const encrypterStub = new EncrypterStub()
     const sut = new DbAddAccount(encrypterStub)
     const encryptSpy = jest.spyOn(encrypterStub, 'stub')
     const accountData = {
