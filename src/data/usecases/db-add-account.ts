@@ -1,26 +1,29 @@
+import { type AddAccount } from '@/domain/usecases'
 import {
-  type AccountModel,
-  type AddAccount,
-  type AddAccountModel,
   type AddAccountRepository,
-  type Encrypter
-} from './db-add-account-protocols'
+  type CheckAccountByEmailRepository,
+  type Hasher
+} from '@/data/protocols'
 
 export class DbAddAccount implements AddAccount {
-  private readonly encrypter: Encrypter
-  private readonly addAccountRepository: AddAccountRepository
   constructor(
-    encrypter: Encrypter,
-    addAccountRepository: AddAccountRepository
-  ) {
-    this.encrypter = encrypter
-    this.addAccountRepository = addAccountRepository
-  }
+    private readonly hasher: Hasher,
+    private readonly addAccountRepository: AddAccountRepository,
+    private readonly checkAccountByEmailRepository: CheckAccountByEmailRepository
+  ) {}
 
-  async add(account: AddAccountModel): Promise<AccountModel> {
-    const hashedPassword = await this.encrypter.encrypt(account.password)
-    const newAccount = { ...account, password: hashedPassword }
-    await this.addAccountRepository.add(newAccount)
-    return null as unknown as AccountModel
+  async add(accountData: AddAccount.Params): Promise<AddAccount.Result> {
+    const exists = await this.checkAccountByEmailRepository.checkByEmail(
+      accountData.email
+    )
+    let isValid = false
+    if (!exists) {
+      const hashedPassword = await this.hasher.hash(accountData.password)
+      isValid = await this.addAccountRepository.add({
+        ...accountData,
+        password: hashedPassword
+      })
+    }
+    return isValid
   }
 }
