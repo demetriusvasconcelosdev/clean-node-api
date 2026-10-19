@@ -40,7 +40,9 @@ describe('DbAuthentication UseCase', () => {
     const { sut, loadAccountByEmailRepositorySpy } = makeSut()
     const authenticationParams = mockAuthenticationParams()
     await sut.auth(authenticationParams)
-    expect(loadAccountByEmailRepositorySpy.email).toBe(authenticationParams.email)
+    expect(loadAccountByEmailRepositorySpy.email).toBe(
+      authenticationParams.email
+    )
   })
 
   test('Should throw if LoadAccountByEmailRepository throws', async () => {
@@ -86,7 +88,9 @@ describe('DbAuthentication UseCase', () => {
   test('Should call Encrypter with correct plaintext', async () => {
     const { sut, encrypterSpy, loadAccountByEmailRepositorySpy } = makeSut()
     await sut.auth(mockAuthenticationParams())
-    expect(encrypterSpy.plaintext).toBe(loadAccountByEmailRepositorySpy.result?.id)
+    expect(encrypterSpy.plaintext).toBe(
+      loadAccountByEmailRepositorySpy.result?.id
+    )
   })
 
   test('Should throw if Encrypter throws', async () => {

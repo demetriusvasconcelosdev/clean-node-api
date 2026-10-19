@@ -1,5 +1,8 @@
 import { DbLoadAccountByToken } from './db-load-account-by-token'
-import { DecrypterSpy, LoadAccountByTokenRepositorySpy } from '@/tests/data/mocks'
+import {
+  DecrypterSpy,
+  LoadAccountByTokenRepositorySpy
+} from '@/tests/data/mocks'
 import { throwError } from '@/tests/domain/mocks'
 import { faker } from '@faker-js/faker'
 
@@ -12,7 +15,10 @@ interface SutTypes {
 const makeSut = (): SutTypes => {
   const decrypterSpy = new DecrypterSpy()
   const loadAccountByTokenRepositorySpy = new LoadAccountByTokenRepositorySpy()
-  const sut = new DbLoadAccountByToken(decrypterSpy, loadAccountByTokenRepositorySpy)
+  const sut = new DbLoadAccountByToken(
+    decrypterSpy,
+    loadAccountByTokenRepositorySpy
+  )
   return { sut, decrypterSpy, loadAccountByTokenRepositorySpy }
 }
 
