@@ -3,6 +3,8 @@ module.exports = {
   collectCoverageFrom: ['<rootDir>/src/**/*.ts', '!<rootDir>/src/**/index.ts'],
   coverageDirectory: 'coverage',
   testEnvironment: 'node',
+  globalSetup: '<rootDir>/jest-mongodb-setup.js',
+  globalTeardown: '<rootDir>/jest-mongodb-teardown.js',
   transform: { '.+\\.ts$': 'ts-jest' },
   moduleNameMapper: {
     '^@/tests/(.*)$': '<rootDir>/tests/$1',
