@@ -49,6 +49,7 @@ describe('Login GraphQL', () => {
       expect(res.status).toBe(401)
       expect(res.body.data).toBeFalsy()
       expect(res.body.errors[0].message).toBe('Unauthorized')
+      expect(res.body.errors[0].extensions.stacktrace).toBeUndefined()
     })
   })
 

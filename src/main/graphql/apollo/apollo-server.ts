@@ -29,5 +29,9 @@ export const setupApolloServer = (): ApolloServer => {
   const schema = authDirectiveTransformer(
     makeExecutableSchema({ resolvers, typeDefs })
   )
-  return new ApolloServer({ schema, plugins: [handleErrors] })
+  return new ApolloServer({
+    schema,
+    plugins: [handleErrors],
+    includeStacktraceInErrorResponses: false
+  })
 }
