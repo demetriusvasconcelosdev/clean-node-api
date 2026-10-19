@@ -18,7 +18,8 @@
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests",
     "up": "npm run build && docker compose up -d",
-    "down": "docker compose down"
+    "down": "docker compose down",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
@@ -42,7 +43,9 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.6.0",
+    "husky": "^9.1.7",
     "jest": "^30.5.2",
+    "lint-staged": "^17.6.0",
     "mongodb-memory-server": "^11.3.0",
     "nodemon": "^3.1.14",
     "prettier": "^3.9.9",
