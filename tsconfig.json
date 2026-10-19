@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDir": ".",
     "module": "commonjs",
     "target": "es2021",
     "esModuleInterop": true,
@@ -12,9 +12,10 @@
     "declaration": true,
     "baseUrl": ".",
     "paths": {
+      "@/tests/*": ["tests/*"],
       "@/*": ["src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "tests"],
   "exclude": ["node_modules", "dist"]
 }
