@@ -1,12 +1,14 @@
 import { setupApp } from '@/main/config/app'
 import { MongoHelper } from '@/infra/db'
 import { mockAccessToken } from '@/tests/main/mock-access-token'
+import { type Express } from 'express'
 import request from 'supertest'
 
-const app = setupApp()
+let app: Express
 
 describe('Survey Routes', () => {
   beforeAll(async () => {
+    app = await setupApp()
     await MongoHelper.connect(process.env.MONGO_URL!)
   })
 

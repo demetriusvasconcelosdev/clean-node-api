@@ -2,10 +2,11 @@ import { setupApp } from '@/main/config/app'
 import { MongoHelper } from '@/infra/db'
 import { mockAccessToken } from '@/tests/main/mock-access-token'
 import { type Collection, ObjectId } from 'mongodb'
+import { type Express } from 'express'
 import request from 'supertest'
 
 let surveyCollection: Collection
-const app = setupApp()
+let app: Express
 
 const mockSurveyId = async (): Promise<string> => {
   const res = await surveyCollection.insertOne({
@@ -21,6 +22,7 @@ const mockSurveyId = async (): Promise<string> => {
 
 describe('SurveyResult Routes', () => {
   beforeAll(async () => {
+    app = await setupApp()
     await MongoHelper.connect(process.env.MONGO_URL!)
   })
 
