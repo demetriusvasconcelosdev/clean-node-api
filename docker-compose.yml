@@ -1,0 +1,26 @@
+services:
+  mongo:
+    container_name: mongo-container
+    image: mongo:7
+    restart: always
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+  api:
+    container_name: api-container
+    image: node:22
+    working_dir: /usr/src/clean-node-api
+    restart: always
+    command: bash -c "npm install --omit=dev && npm start"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/clean-node-api
+      - PORT=5050
+    volumes:
+      - ./dist/:/usr/src/clean-node-api/dist/
+      - ./package.json:/usr/src/clean-node-api/package.json
+      - ./package-lock.json:/usr/src/clean-node-api/package-lock.json
+    ports:
+      - "5050:5050"
+    depends_on:
+      - mongo
