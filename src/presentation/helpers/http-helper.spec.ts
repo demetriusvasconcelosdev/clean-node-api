@@ -35,7 +35,10 @@ describe('HttpHelper', () => {
   })
 
   test('ok should return 200 with the data', () => {
-    expect(ok({ any: 'data' })).toEqual({ statusCode: 200, body: { any: 'data' } })
+    expect(ok({ any: 'data' })).toEqual({
+      statusCode: 200,
+      body: { any: 'data' }
+    })
   })
 
   test('noContent should return 204 with null body', () => {

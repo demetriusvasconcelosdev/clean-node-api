@@ -8,13 +8,19 @@ const makeSut = (): CompareFieldsValidation => {
 describe('CompareFields Validation', () => {
   test('Should return an InvalidParamError if validation fails', () => {
     const sut = makeSut()
-    const error = sut.validate({ field: 'any_value', fieldToCompare: 'other_value' })
+    const error = sut.validate({
+      field: 'any_value',
+      fieldToCompare: 'other_value'
+    })
     expect(error).toEqual(new InvalidParamError('fieldToCompare'))
   })
 
   test('Should not return if validation succeeds', () => {
     const sut = makeSut()
-    const error = sut.validate({ field: 'any_value', fieldToCompare: 'any_value' })
+    const error = sut.validate({
+      field: 'any_value',
+      fieldToCompare: 'any_value'
+    })
     expect(error).toBeFalsy()
   })
 })
